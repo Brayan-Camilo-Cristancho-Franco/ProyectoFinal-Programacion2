@@ -31,8 +31,8 @@ public class VetRepositoryImpl implements VetRepository {
             entityManager.getTransaction().begin();
             Vet vet = entityManager.find(Vet.class, username);
             vet.setName(name);
-            vet.setAdress(address);
-            vet.setNeighborhood(neighborhood);
+           // vet.setAddress(address);
+            //vet.setNeighborhood(neighborhood);
             entityManager.getTransaction().commit();
             return Optional.of(vet);
         } catch (Exception e) {

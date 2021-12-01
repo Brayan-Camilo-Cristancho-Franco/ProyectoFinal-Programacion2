@@ -7,6 +7,7 @@ import co.edu.unbosque.model.jpa.repositories.UserAppRepository;
 import co.edu.unbosque.model.jpa.repositories.UserAppRepositoryImpl;
 import co.edu.unbosque.model.jpa.repositories.VetRepository;
 import co.edu.unbosque.model.jpa.repositories.VetRepositoryImpl;
+import co.edu.unbosque.model.resources.pojos.VetPojo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,25 +19,30 @@ public class VetService {
     VetRepository vetRepository;
     UserAppRepository userAppRepository;
 
-    public void saveVet(String name, String address, String neighborhood,String username) {
+    public  Optional<VetPojo> saveVet(VetPojo vetPojo) {
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tutorial");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         vetRepository = new VetRepositoryImpl(entityManager);
-        userAppRepository = new UserAppRepositoryImpl(entityManager);
 
-        Optional<UserApp> userapp = userAppRepository.findByUsername(username);
-        userapp.ifPresent(p -> {
-            p.addVet(new Vet(name, address,neighborhood));
-            userAppRepository.save(p);
-        });
+        Vet vet = new Vet(vetPojo.getUsername(), vetPojo.getPassword(), vetPojo.getEmail(), vetPojo.getName(),vetPojo.getAddress(),vetPojo.getNeighborhood());
+        Optional<Vet> persistedVet = vetRepository.save(vet);
 
         entityManager.close();
         entityManagerFactory.close();
 
-        return;
-
+        if (persistedVet.isPresent()) {
+            return Optional.of(new VetPojo(
+                    persistedVet.get().getUsername(),
+                    persistedVet.get().getPassword(),
+                    persistedVet.get().getEmail(),
+                    persistedVet.get().getName(),
+                    persistedVet.get().getAddress(),
+                    persistedVet.get().getNeighborhood()));
+        } else {
+            return Optional.empty();
+        }
     }
     public void updateVet(String username, String name, String address, String neighborhood) {
 

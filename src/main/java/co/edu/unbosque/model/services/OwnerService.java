@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Stateless
 
@@ -18,7 +19,7 @@ public class OwnerService {
 
     OwnerRepository ownerRepository;
 
-    public List<OwnerPojo> listOwners() {
+   /* public List<OwnerPojo> listOwners() {
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tutorial");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -43,24 +44,37 @@ public class OwnerService {
 
         return ownersPojo;
 
-    }
+    }*/
 
-    public Owner saveOwner(String username, String person_id, String name, String adress, String neighborhood) {
+    public Optional<OwnerPojo> saveOwner(OwnerPojo ownerpojo) {
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tutorial");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         ownerRepository = new OwnerRepositoryImpl(entityManager);
 
-        Owner owner = new Owner(username, person_id, name, adress, neighborhood);
-        Owner persistedOwner = ownerRepository.save(owner).get();
+        Owner owner = new Owner(ownerpojo.getUsername(), ownerpojo.getPassword(), ownerpojo.getEmail(),
+                ownerpojo.getPerson_id(), ownerpojo.getName(), ownerpojo.getAdress(), ownerpojo.getNeighborhood());
+        Optional<Owner> persistedOwner = ownerRepository.save(owner);
 
         entityManager.close();
         entityManagerFactory.close();
 
-        return persistedOwner;
+        if (persistedOwner.isPresent()) {
+            return Optional.of(new OwnerPojo(persistedOwner.get().getUsername(),
+                    persistedOwner.get().getPassword(),
+                    persistedOwner.get().getEmail(),
+                    persistedOwner.get().getPerson_id(),
+                    persistedOwner.get().getName(),
+                    persistedOwner.get().getAddress(),
+                    persistedOwner.get().getNeighborhood()));
+        } else {
+            return Optional.empty();
+        }
 
     }
+
+
 
     public void updateOwner(String username, String name, String addres, String neighborhood) {
 

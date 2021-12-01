@@ -1,51 +1,36 @@
 package co.edu.unbosque.model.resources;
 
 import co.edu.unbosque.model.resources.filters.Logged;
-import co.edu.unbosque.model.resources.pojos.VetPojo;
-import co.edu.unbosque.model.services.VetService;
-
+import co.edu.unbosque.model.resources.pojos.OfficialPojo;
+import co.edu.unbosque.model.services.OfficialService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Path("/vets")
-public class VetResource {
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response list() {
-
-        List<VetPojo> authors = new ArrayList<VetPojo>();
-       // authors.add(new VetPojo("Veterinaria1", "Nombre veterinaria 1", "Direccion1", "Vecindario1"));
-        //authors.add(new VetPojo("Veterinaria2", "Nombre veterinaria 2", "Direccion2", "Vecindario2"));
-
-        return Response.ok()
-                .entity(authors)
-                .build();
-    }
-
+public class OfficialResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(VetPojo vet) {
+    public Response create(OfficialPojo official) {
 
-        Optional<VetPojo> persistedVet = new VetService().saveVet(vet);
-        if (persistedVet.isPresent()) {
+        Optional<OfficialPojo> persistedOfficial = new OfficialService().saveOfficial(official);
+
+        if (persistedOfficial.isPresent()) {
             return Response.status(Response.Status.CREATED)
-                    .entity(persistedVet.get())
+                    .entity(persistedOfficial.get())
                     .build();
         } else {
             return Response.serverError()
                     .entity("Owner user could not be created")
-
                     .build();
-            }
+        }
+
     }
+
     @Logged
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -62,6 +47,5 @@ public class VetResource {
                 .build();
 
     }
-
 
 }

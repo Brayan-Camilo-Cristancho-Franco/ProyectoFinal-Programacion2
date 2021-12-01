@@ -1,71 +1,38 @@
 package co.edu.unbosque.model.jpa.entities;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "Owner") // Optional
-@NamedQueries({
-        @NamedQuery(name = "Owner.findAll",
-                query = "SELECT b FROM Owner b")
-})
+@Table(name = "Owner")
+@PrimaryKeyJoinColumn
+public class Owner extends UserApp {
 
-public class Owner {
-    @Id
-    @GeneratedValue
-    @Column(name = "username", nullable = false)
-    private String username;
-
-    @Column(name = "person_id", nullable = false)
+    @Column(name = "person_id", nullable = false, unique = true)
     private String person_id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "adress", nullable = false)
-    private String adress;
+    @Column(name = "address", nullable = false)
+    private String address;
 
     @Column(name = "neighborhood", nullable = false)
     private String neighborhood;
 
-
-    @OneToMany(mappedBy = "owner")
-    private List<Pet> pets = new ArrayList<>();
-
-
-    @OneToOne
-    @JoinColumn(name = "username")
-    private UserApp userapp;
-
-
     public Owner() {
     }
 
-    public Owner(String person_id, String name, String adress, String neighborhood) {
+    public Owner(String username, String password, String email, String person_id, String name, String address, String neighborhood) {
+        super(username, password, email, "owner");
         this.person_id = person_id;
         this.name = name;
-        this.adress = adress;
+        this.address = address;
         this.neighborhood = neighborhood;
-
     }
 
-    public Owner(String username, String person_id, String name, String adress, String neighborhood) {
-        this.username = username;
-        this.person_id = person_id;
-        this.name = name;
-        this.adress = adress;
-        this.neighborhood = neighborhood;
-
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getPerson_id() {
         return person_id;
@@ -83,12 +50,12 @@ public class Owner {
         this.name = name;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getNeighborhood() {
@@ -98,27 +65,4 @@ public class Owner {
     public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
     }
-
-    public List<Pet> getPets() {
-        return pets;
-    }
-
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
-    }
-
-    public UserApp getUserapp() {
-        return userapp;
-    }
-
-    public void setUserapp(UserApp userapp) {
-        this.userapp = userapp;
-    }
-
-    public void addPet(Pet pet) {
-        pets.add(pet);
-        pet.setOwner(this);
-    }
-
-
 }

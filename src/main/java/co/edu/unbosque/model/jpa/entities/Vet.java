@@ -1,62 +1,31 @@
 package co.edu.unbosque.model.jpa.entities;
-
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "vet") // Optional
-@NamedQueries({
-        @NamedQuery(name = "Vet.findAll",
-                query = "SELECT b FROM Vet b")
-})
-public class Vet {
-    @Id
-    @GeneratedValue
-    @Column(name = "username", nullable = false)
-    private String username;
+@Table(name = "Vet")
+@PrimaryKeyJoinColumn
+public class Vet extends UserApp {
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "adress", nullable = false)
-    private String adress;
+    @Column(name = "address", nullable = false)
+    private String address;
 
     @Column(name = "neighborhood", nullable = false)
     private String neighborhood;
-
-
-    @OneToMany(mappedBy = "vet")
-    private List<Visit> visits = new ArrayList<>();
-
-    @OneToOne
-    @JoinColumn(name = "username")
-    private UserApp userapp;
-
-
     public Vet() {
     }
 
-    public Vet(String name, String adress, String neighborhood) {
+    public Vet(String username, String password, String email, String name,String address, String neighborhood) {
+        super(username, password, email, "vet");
         this.name = name;
-        this.adress = adress;
+        this.address = address;
         this.neighborhood = neighborhood;
-    }
 
-    public Vet(String username, String name, String adress, String neighborhood) {
-        this.username = username;
-        this.name = name;
-        this.adress = adress;
-        this.neighborhood = neighborhood;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getName() {
@@ -67,12 +36,12 @@ public class Vet {
         this.name = name;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getNeighborhood() {
@@ -82,20 +51,5 @@ public class Vet {
     public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
     }
-
-    public List<Visit> getVisits() {
-        return visits;
-    }
-
-    public void setVisits(List<Visit> visits) {
-        this.visits = visits;
-    }
-
-    public UserApp getUserapp() {
-        return userapp;
-    }
-
-    public void setUserapp(UserApp userapp) {
-        this.userapp = userapp;
-    }
 }
+

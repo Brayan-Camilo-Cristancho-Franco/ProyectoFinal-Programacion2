@@ -38,14 +38,14 @@ public class OwnerRepositoryImpl implements OwnerRepository {
         return entityManager.createQuery("from Owner").getResultList();
     }
 
-    public Optional<Owner> update(String userame, String name, String adress, String neighborhood) {
+    public Optional<Owner> update(String userame, String name, String address, String neighborhood) {
 
         try {
             entityManager.getTransaction().begin();
 
             Owner owner = entityManager.find(Owner.class, userame);
             owner.setName(name);
-            owner.setAdress(adress);
+            owner.setAddress(address);
             owner.setNeighborhood(neighborhood);
 
 

@@ -15,20 +15,14 @@ public class UserAppRepositoryImpl implements UserAppRepository {
         this.entityManager = entityManager;
     }
 
-    public Optional<UserApp> findByUsername(String username) {
-        UserApp userapp = entityManager.find(UserApp.class, username);
-        return userapp != null ? Optional.of(userapp) : Optional.empty();
-    }
 
     public List<UserApp> findAll() {
         return entityManager.createQuery("from UserApp").getResultList();
     }
 
-    public Optional<UserApp> findByName(String email) {
-        UserApp author = entityManager.createNamedQuery("UserApp.findByEmail", UserApp.class)
-                .setParameter("email", email)
-                .getSingleResult();
-        return author != null ? Optional.of(author) : Optional.empty();
+    public Optional<UserApp> findByUsername(String username) {
+        UserApp user = entityManager.find(UserApp.class, username);
+        return user != null ? Optional.of(user) : Optional.empty();
     }
 
     public Optional<UserApp> update(String username, String email) {

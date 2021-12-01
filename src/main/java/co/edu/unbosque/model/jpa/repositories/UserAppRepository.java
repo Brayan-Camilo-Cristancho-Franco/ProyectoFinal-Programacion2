@@ -11,8 +11,6 @@ public interface UserAppRepository {
 
     List<UserApp> findAll();
 
-    Optional<UserApp> findByName(String name);
-
     Optional<UserApp> save(UserApp userapp);
 
     Optional<UserApp> findByUsername(String username);
