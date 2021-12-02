@@ -15,10 +15,6 @@ public class PetCaseRepositoryImpl implements PetCaseRepository {
         this.entityManager = entityManager;
     }
 
-    public Optional<PetCase> findById(Integer case_id) {
-        PetCase petcase = entityManager.find(PetCase.class, case_id);
-        return petcase != null ? Optional.of(petcase) : Optional.empty();
-    }
 
     public List<PetCase> findAll() {
         return entityManager.createQuery("from PetCase").getResultList();

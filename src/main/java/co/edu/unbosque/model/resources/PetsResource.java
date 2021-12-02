@@ -9,11 +9,11 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/owners/{username}")
+@Path("/pets/{pet_id}")
 public class PetsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response list(@PathParam("username") Integer authorId) {
+    public Response list(@PathParam("pet_id") Integer pet_id) {
 
         List<PetPojo> pets = new ArrayList<PetPojo>();
         pets.add(new PetPojo(1, "Microchip1", "Max", "Especie1", "Raza1", "Pequeño", "M", "Url1", "Owner1"));
@@ -45,9 +45,8 @@ public class PetsResource {
     }
 
     @PUT
-    @Path("/pets/{pet_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modify(@PathParam("username") String username, @PathParam("pet_id") Integer pet_id, PetPojo pet) {
+    public Response modify(@PathParam("pet_id") Integer pet_id, PetPojo pet) {
 
         return Response.ok()
                 .entity(pet)

@@ -15,10 +15,6 @@ public class VisitRepositoryImpl implements VisitRepository {
         this.entityManager = entityManager;
     }
 
-    public Optional<Visit> findById(Integer visit_id) {
-        Visit book = entityManager.find(Visit.class, visit_id);
-        return book != null ? Optional.of(book) : Optional.empty();
-    }
 
     public List<Visit> findAll() {
         return entityManager.createQuery("from Visit").getResultList();

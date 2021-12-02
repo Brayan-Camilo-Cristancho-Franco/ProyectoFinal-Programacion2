@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface PetCaseRepository {
 
-    Optional<PetCase> findById(Integer id);
 
     List<PetCase> findAll();
 

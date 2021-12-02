@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface VisitRepository {
 
-    Optional<Visit> findById(Integer visit_id);
 
     List<Visit> findAll();
 

@@ -6,16 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Pet") // Optional
-@NamedQueries({
-
-        @NamedQuery(name = "Pet.findById",
-                query = "SELECT a FROM Pet a WHERE a.pet_id = :pet_id"),
-
-        @NamedQuery(name = "Pet.findAll",
-                query = "SELECT a FROM Pet a")
-})
 public class Pet {
-
 
     @Id
     @GeneratedValue
@@ -43,11 +34,12 @@ public class Pet {
     @Column(name = "picture", nullable = false)
     private String picture;
 
-    @OneToMany(mappedBy = "pet")
+
+    @OneToMany(mappedBy = "pet",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<PetCase> Petscase = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "pet")
+    @OneToMany(mappedBy = "pet",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Visit> visits = new ArrayList<>();
 
     @ManyToOne

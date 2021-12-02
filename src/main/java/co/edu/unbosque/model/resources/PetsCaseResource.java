@@ -11,13 +11,12 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/petscase")
+@Path("petscase/{case_id}")
 public class PetsCaseResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/pet/{pet_id}")
-    public Response list(@PathParam("pet_id") Integer authorId) {
+    public Response get(@PathParam("case_id") Integer case_id) {
 
         List<PetCasePojo> petcase = new ArrayList<PetCasePojo>();
         petcase.add(new PetCasePojo(1, null, "Perdida", "Perdida descripcion", 1));
